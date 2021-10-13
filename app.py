@@ -71,6 +71,10 @@ def getcookie():
     session.clear()
     return redirect(url_for('home'))
 
+@app.route('/homepage')
+def homepage():
+    return render_template('HomePage.html')
+
 
 @app.route('/insert', methods=["POST"])
 def insert():
