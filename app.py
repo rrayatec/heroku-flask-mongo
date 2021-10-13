@@ -11,6 +11,9 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 
+    client = pymongo.MongoClient(SECRET_KEY)
+    db = client.Escuela
+    usuarios = db.alumno
     return SECRET_KEY
 
 
