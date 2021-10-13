@@ -21,9 +21,7 @@ def home():
     email = None
     if 'email' in session:
         email = session['email']
-        return render_template('index.html', error=email)
-    else:
-        return render_template('Login.html')
+    return render_template('index.html', error=email)
 
 
 @app.route('/login', methods=['GET'])
@@ -73,11 +71,9 @@ def getcookie():
     session.clear()
     return redirect(url_for('home'))
 
-
 @app.route('/homepage')
 def homepage():
     return render_template('HomePage.html')
-
 
 @app.route('/create_form')
 def create_form():
@@ -107,7 +103,7 @@ def update():
     try:
         filter = {"matricula": request.form['matricula']}
         user = {"$set": {
-            "matricula": request.form['matricula'], "nombre": request.form['nombre'], "correo": request.form['correo'], "contrasena": request.form['contrasena']}}
+            "matricula": request.form['matricula'],"nombre": request.form['nombre'], "correo": request.form['correo'], "contrasena": request.form['contrasena']}}
         cuentas.update_one(filter, user)
         return redirect(url_for('find_all'))
 
