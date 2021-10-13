@@ -5,38 +5,40 @@
 
   <title>Create Form</title>
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 
 <body>
 
-  <a class="nav-link" href="http://localhost:5000/">Home</a>
+  <a class="nav-link" href="/homepage">Home</a>
 
+  <a class="nav-link" href="/create_form">Create</a>
 
-  <a class="nav-link" href="http://localhost:5000/create_form">Create</a>
-
-  <a class="nav-link" href="http://localhost:5000/retrieve">Retrieve</a>
+  <a class="nav-link" href="/find_all">find_all</a>
 
 
   <br><br>
   <h2>Enter The Data in the given form to create record</h2>
   <br><br>
-  <form method="POST" action="/create">
+  <form method="POST" action="/insert">
 
     <div class="form-group">
-      <label>Enrollment Number: </label>
-      <input type="text" name="enrollment" class="form-control" />
+      <label>Matricula: </label>
+      <input type="text" name="matricula" class="form-control" />
     </div>
     <div class="form-group">
-      <label>Name: </label>
-      <input type="text" name="name" class="form-control" />
+      <label>Nombre: </label>
+      <input type="text" name="nombre" class="form-control" />
     </div>
     <div class="form-group">
       <label>Email: </label>
-      <input type="text" name="email" class="form-control" />
+      <input type="text" name="correo" class="form-control" />
     </div>
     <div class="form-group">
       <label>Password: </label>
-      <input type="password" name="password" class="form-control" />
+      <input type="password" name="contrasena" class="form-control" />
     </div>
 
 

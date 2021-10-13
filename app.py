@@ -75,6 +75,10 @@ def getcookie():
 def homepage():
     return render_template('HomePage.html')
 
+@app.route('/create_form')
+def create_form():
+    return render_template('CreateForm.html')
+
 
 @app.route('/insert', methods=["POST"])
 def insert():
@@ -99,7 +103,7 @@ def update():
     try:
         filter = {"matricula": request.form['matricula']}
         user = {"$set": {
-            "nombre": request.form['nombre'], "correo": request.form['correo'], "contrasena": request.form['contrasena']}}
+            "matricula": request.form['matricula'],"nombre": request.form['nombre'], "correo": request.form['correo'], "contrasena": request.form['contrasena']}}
         cuentas.update_one(filter, user)
         return redirect(url_for('find_all'))
 
