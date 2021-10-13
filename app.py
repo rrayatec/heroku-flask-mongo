@@ -1,15 +1,17 @@
 from flask import Flask, render_template
 import pymongo
+from decouple import config
+
+config.encoding = 'cp1251'
+SECRET_KEY = config('SECRET_KEY')
 
 app = Flask(__name__)
-client = pymongo.MongoClient(
-    "mongodb+srv://rraya:rubenraya@cluster0.w9ojs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
 
 @app.route('/')
 def index():
 
-    return render_template('index.html')
+    return SECRET_KEY
 
 
 if __name__ == '__main__':
