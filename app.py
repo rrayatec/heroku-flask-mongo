@@ -14,7 +14,7 @@ def index():
     client = pymongo.MongoClient(SECRET_KEY)
     db = client.Escuela
     usuarios = db.alumno
-    return SECRET_KEY
+    return usuarios
 
 
 if __name__ == '__main__':
