@@ -31,7 +31,7 @@ def login():
         email = session['email']
         return render_template('index.html', error=email)
 
-    return render_template('login.html', error=email)
+    return render_template('Login.html', error=email)
 
 
 @app.route('/login', methods=['POST'])
