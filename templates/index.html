@@ -10,6 +10,19 @@
     <link rel="stylesheet" href="static/css/estilos.css" class="">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "9b0e845d-6281-4c72-8cd9-2ef76370f18e", // The ID of this integration.
+            region: "us-south", // The region your integration is hosted in.
+            serviceInstanceID: "122285db-8e63-4be0-ab1c-56eaf5b79976", // The ID of your service instance.
+            onLoad: function (instance) { instance.render(); }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js"
+            document.head.appendChild(t);
+        });
+    </script>
     <title>Hello, {{ error }}!</title>
 </head>
 
