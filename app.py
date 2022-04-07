@@ -42,6 +42,16 @@ def home():
     return render_template('index.html', error=email)
 
 
+@app.route('/login', methods=['GET'])
+def login():
+    email = None
+    if 'email' in session:
+        email = session['email']
+        return render_template('index.html', error=email)
+
+    return render_template('Login.html', error=email)
+
+
 @app.route('/login', methods=['POST'])
 def login2Index():
     email = ""
