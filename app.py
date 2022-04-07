@@ -1,20 +1,38 @@
 from flask import Flask, redirect, url_for, request, render_template, make_response, session
 from werkzeug.exceptions import MethodNotAllowed
+from pymongo import MongoClient, cursor
+from twilio.rest import Client
 import pymongo
 import datetime
 from decouple import config
 
 config.encoding = 'cp1251'
-SECRET_KEY = config('SECRET_KEY')
 
 app = Flask(__name__)
 app.permanent_session_lifetime = datetime.timedelta(days=365)
 app.secret_key = "super secret key"
 
-client = pymongo.MongoClient(SECRET_KEY)
+# TWILIO
+#############################################################
+account_sid = config('account_sid')
+auth_token = config('auth_token')
+TwilioClient = Client(account_sid, auth_token)
+#############################################################
+
+# MONGODB
+#############################################################
+mongodb_key = config('mongodb_key')
+client = pymongo.MongoClient(mongodb_key)
 db = client.Escuela
 cuentas = db.alumno
+#############################################################
 
+# FlASK
+#############################################################
+app = Flask(__name__)
+app.permanent_session_lifetime = datetime.timedelta(days=365)
+app.secret_key = "super secret key"
+#############################################################
 
 @app.route('/')
 def home():
@@ -31,7 +49,7 @@ def login():
         email = session['email']
         return render_template('index.html', error=email)
 
-    return render_template('Login.html', error=email)
+    return render_template('login.html', error=email)
 
 
 @app.route('/login', methods=['POST'])
@@ -44,7 +62,14 @@ def login2Index():
     password = request.form['password']
     session['email'] = email
     session['password'] = password
-
+    # TWILIO
+    message = TwilioClient.messages.create(
+        from_='whatsapp:+14155238886',
+        body='Hola %s! Hay un nuevo inicio de sesión' % email,
+        to='whatsapp:+5215514200581'
+    )
+    print(message.sid)
+    ############################################################
     return render_template('index.html', error=email)
 
 
@@ -57,7 +82,6 @@ def signup():
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
-
         session['email'] = email
         session['password'] = password
         session['name'] = name
@@ -71,9 +95,11 @@ def getcookie():
     session.clear()
     return redirect(url_for('home'))
 
+
 @app.route('/homepage')
 def homepage():
     return render_template('HomePage.html')
+
 
 @app.route('/create_form')
 def create_form():
@@ -103,7 +129,7 @@ def update():
     try:
         filter = {"matricula": request.form['matricula']}
         user = {"$set": {
-            "matricula": request.form['matricula'],"nombre": request.form['nombre'], "correo": request.form['correo'], "contrasena": request.form['contrasena']}}
+            "matricula": request.form['matricula'], "nombre": request.form['nombre'], "correo": request.form['correo'], "contrasena": request.form['contrasena']}}
         cuentas.update_one(filter, user)
         return redirect(url_for('find_all'))
 
@@ -137,5 +163,31 @@ def find_all():
     # return '<b>Nombre: %s!</b>' % (user.nombre)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/empty")
+def empty():
+    cursor = cuentas.find({})
+    user = []
+    for doc in cursor:
+        user.append(doc)
+
+    return render_template("/empty.html", data=user)
+
+
+@app.route('/home')
+def homeS():
+    return render_template('home.html')
+
+
+@app.route('/login')
+def loginSinple():
+    return render_template('login.html')
+
+
+@app.route('/loginfull')
+def loginFull():
+    return render_template('LoginFull.html')
+
+
+@app.route('/loginfull2')
+def LoginFull2():
+    return render_template('LoginFull2.html')
